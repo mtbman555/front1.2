@@ -1,0 +1,157 @@
+<div class="row">
+  <div class="col-2">
+    <div class="container">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        เพิ่มคลัง
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">เพิ่มคลัง</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="formGroupExampleInput">ชื่อคลัง</label>
+                  <input type="text" [(ngModel)]="addstock.addstockname" name="addstockname" class="form-control" id="formGroupExampleInput"
+                    placeholder="กรุณาใส่ราคาซื้อคลัง">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+              <button type="button" (click)="submitaddstock" class="btn btn-primary">บันทึก</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-4">
+    <!---ตางรางคลัง--->
+    <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">คลังสินค้า</th>
+          <th scope="col"> </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of list; let i = index">
+          <th scope="row">{{data.name}}</th>
+          <td>
+            <button type="button" class="btn btn-danger" (click)=deletestock(data)>ลบ</button>
+
+            <button type="button" class="btn btn-info">ดูคลัง</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col">
+    <div class="container">
+      <div class="row">
+        <div class="col-2">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addpro">เพิ่มสินค้า</button>
+          <div class="modal fade" id="addpro" tabindex="-1" role="dialog" aria-labelledby="addproTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addproTitle">เพิ่มสินค้า</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="name">ชื่อสินค้า</label>
+                      <input type="text" [(ngModel)]="addpro.name" name="name" class="form-control" 
+                        placeholder="กรุณาใส่ชื่อสินค้า">
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="cost">ราคาซื้อสินค้า</label>
+                        <input type="text" [(ngModel)]="addpro.cost" name="cost" class="form-control" 
+                          placeholder="กรุณาใส่ราคาซื้อสินค้า">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="price">ราคาขายสินค้า</label>
+                        <input type="text" [(ngModel)]="addpro.price" name="price" class="form-control" 
+                          placeholder="กรุณาใส่ราคาขายสินค้า">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="amount">จำนวนสินค้า</label>
+                      <input type="text" [(ngModel)]="addpro.amount" name="amount" class="form-control" 
+                        placeholder="กรุณาใส่จำนวนสินค้า">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect1">เลือกคลัง</label>
+                      <select class="form-control" id="exampleFormControlSelect1">
+                        <option *ngFor="let data of list; let i = index">
+                          {{data.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                  <button type="button" (click)="submitaddpro()" class="btn btn-primary">บันทึก</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="serch" class="col col-form-label">ค้นหา</label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="modal2.search" name="search" class="form-control" id="serch" placeholder="กรุณาใส่ชื่อสินค้า">
+        </div>
+        <button type="submit" (click)="submitsearch2()" class="btn btn-primary">ค้นหา</button>
+      </div>
+      <div class="row">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+
+              <th scope="col">ชื่อสินค้า</th>
+
+              <th scope="col">จำนวน</th>
+              <th scope="col">ราคาซื้อ</th>
+              <th scope="col">ราคาขาย</th>
+              <th scope="col"> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of list2; let i = index">
+              <th scope="row">{{data.name}}</th>
+
+
+              <td>{{data.amount}}</td>
+              <td>{{data.cost}}</td>
+              <td>{{data.price}}</td>
+              <td>
+                <button type="button" class="btn btn-danger" (click)="deletepro(data)">ลบ</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

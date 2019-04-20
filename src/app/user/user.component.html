@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="form-group row">
+          <div class="col">
+            <label for="serch" class="col col-form-label">ค้นหา</label>
+          </div>
+          <div class="col-9">
+            <input type="text" [(ngModel)]="modal1.search" name="search" class="form-control" id="serch" placeholder="กรุณาใส่ชื่อผู้ใช้">
+          </div>
+          <div class="col">
+            <button type="submit" (click)="submitsearch()" class="btn btn-primary">ค้นหา</button>
+          </div>
+        </div>
+        <div class="row">
+          <table class="table table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">ชื่อผู้ใช้</th>
+                <th scope="col">รหัสผ่าน</th>
+                <th scope="col">ชื่อ</th>
+                <th scope="col">สถานะ</th>
+                <th scope="col"> </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of user; let i = index">
+                <th scope="row">{{data.id}}</th>
+                <td>{{data.pw}}</td>
+                <td>{{data.name}} </td>
+                <td>{{data.status}} </td>
+                <td><button type="button" (click)=deleteuser(data) class="btn btn-danger">ลบ</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!---------แบบฟอล์มสมาชิก---------->
+      <div class="col-4>">
+        <div class="container">
+          <br>
+          <h3>เพิ่มผู้ใช้</h3>
+          <form>
+            <div class="form-group">
+              <label for="inputID">ชื่อผู้ใช้</label>
+              <input type="text" [(ngModel)]="modaluser.ID" name="ID" class="form-control" id="inputID" placeholder="กรุณาใส่ชื่อผู้ใช้">
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputName">รหัสผ่าน</label>
+                <input type="password" [(ngModel)]="modaluser.PW" name="PW" class="form-control" id="inputName" placeholder="กรุณาใส่รหัสผ่าน">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputLname">รหัสผ่านอีกครั้ง</label>
+                <input type="password" [(ngModel)]="modaluser.PW2" name="PW2" class="form-control" id="inputLname" placeholder="กรุณาใส่รหัสผ่านอีกครั้ง">
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="inputID">ชื่อ</label>
+                <input type="text" [(ngModel)]="modaluser.NAME" name="NAME" class="form-control" id="inputID" placeholder="กรุณาใส่ชื่อ">
+              </div>
+            <!---------ถามเอ็ม**********---------->
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">เลือกสถานะ</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option>ADMIN</option>
+                  <option>GM</option>
+                </select>
+            </div>
+            <button type="submit" (click)="submituser()" class="btn btn-primary">ยืนยัน</button>
+          </form>
+        </div>
+        <div class="container">
+          
+        </div>
+      </div>
+    </div>
+  </div>
