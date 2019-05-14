@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+
+import { UserService } from "../services/user.service"
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-user',
@@ -8,28 +12,39 @@ import Swal from 'sweetalert2';
 })
 export class UserComponent implements OnInit {
   user: any = [];
-  modal1:any = {
+  modal1: any = {
     search: ""
   }
-  modaluser:any = {
-    ID: "", PW: "",PW2: "", NAME: "", STATUS: ""
+  modaluser: any = {
+    id: "", pw: "", pw2: "", name: "", status: ""
   }
-  constructor() { }
+  constructor(
+    private userService: UserService,
+    private router: Router) { }
 
-  ngOnInit() {
-    this.user = [
-      {
-        id: "DD0001",pw: "123456", name: "จานโอชา", status: "GM"
-      },
-    ]
+  async ngOnInit() {
+    this.user = await this.userService.getAllUser().toPromise()
   }
-  submitsearch(){
+
+  submitsearch() {
     console.log(this.modal1)
+    this.router.navigate(['/bg'])
   }
-  submituser(){
-    console.log(this.modaluser)
+
+
+  async submituser() {
+    
+    let body = this.modaluser
+      if (body.pw == body.pw2) {
+        if (body.pw.length >= 6) {
+            await this.userService.insertUser(this.modaluser)
+            this.user = await this.userService.getAllUser().toPromise()
+        }
+      }else{
+        location.reload()
+      }
   }
-  deleteuser(data){
+  deleteuser(data) {
     Swal.fire({
       title: 'Are you sure?',
       text: "คุณยืนยันใช่ไหมที่จะลบ",
@@ -38,13 +53,16 @@ export class UserComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: 'ยกเลิก',
       confirmButtonText: 'ยืนยัน'
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.value) {
+        let deleteUser = await this.userService.deleteUser(data._id)
+        this.user = await this.userService.getAllUser().toPromise()
         Swal.fire(
           'ลบแล้ว',
           'การลบเสร็จสมบูรณ์',
           'success'
         )
+        location.reload()
       }
     })
   }

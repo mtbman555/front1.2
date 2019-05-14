@@ -1,0 +1,23 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container login-container">
+  <div class="row">
+    <div class="col-md login-form-1">
+      <h3>BoardGame Cafe</h3>
+      <form>
+        <div class="form-group">
+          <input type="text" [(ngModel)]="modallogin.id" name="id" class="form-control" placeholder="ชื่อผู้ใช้ของคุณ" value="" />
+        </div>
+        <div class="form-group">
+          <input type="password" [(ngModel)]="modallogin.pw" name="pw" class="form-control" placeholder="รหัสผ่านของคุณ" value="" />
+        </div>
+        <div class="form-group">
+          <input type="submit" class="btnSubmit" (click)="submitlogin()" value="เข้าสู่ระบบ" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

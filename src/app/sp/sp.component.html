@@ -1,17 +1,7 @@
 <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <div class="form-group row">
-          <div class="col">
-            <label for="serch" class="col col-form-label">ค้นหา</label>
-          </div>
-          <div class="col-9">
-            <input type="text" [(ngModel)]="modal1.search" name="search" class="form-control" id="serch" placeholder="กรุณาใส่รหัสสมาชิก">
-          </div>
-          <div class="col">
-            <button type="submit" (click)="submitsearch()" class="btn btn-primary">ค้นหา</button>
-          </div>
-        </div>
+        
         <div class="row">
           <table class="table table-hover">
             <thead class="thead-dark">
@@ -49,7 +39,7 @@
           <form>
             <div class="form-group">
               <label for="inputID">รหัสสมาชิก</label>
-              <input type="text" [(ngModel)]="modalmem.ID" name="ID" class="form-control" id="inputID" placeholder="กรุณาใส่รหัสสมาชิก">
+              <input type="text" [(ngModel)]="modalmem.id" name="ID" class="form-control" id="inputID" placeholder="กรุณาใส่รหัสสมาชิก">
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
@@ -58,7 +48,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="inputLname">นามสกุล</label>
-                <input type="text" [(ngModel)]="modalmem.sname" name="sname" class="form-control" id="inputLname" placeholder="กรุณาใส่นามสกุลสมาชิก">
+                <input type="text" [(ngModel)]="modalmem.lname" name="sname" class="form-control" id="inputLname" placeholder="กรุณาใส่นามสกุลสมาชิก">
               </div>
             </div>
             <div class="form-group">
@@ -77,20 +67,16 @@
           <h3>เพิ่ม/ลดแต้มสมาชิก</h3>
           <div class="form-group">
             <label for="inputID">รหัสสมาชิก</label>
-            <input type="text" [(ngModel)]="modalpoint.ID" name="ID" class="form-control" id="inputID" placeholder="กรุณาใส่รหัสสมาชิก">
+            <input type="text" [(ngModel)]="modalpoint.id" name="id" class="form-control" id="inputID" placeholder="กรุณาใส่รหัสสมาชิก">
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="input">เพิ่มแต้ม</label>
-              <input type="text" [(ngModel)]="modalpoint.add" name="add" class="form-control" id="input" placeholder="กรุณาใส่แต้ม">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="input">ลดแต้ม</label>
-              <input type="text" [(ngModel)]="modalpoint.sub" name="sub" class="form-control" id="input" placeholder="กรุณาใส่แต้ม">
+              <input type="text" [(ngModel)]="modalpoint.point" name="point" class="form-control" id="input" placeholder="กรุณาใส่แต้ม">
+              <button type="submit" (click)="addpoint()" class="btn btn-primary">เพิ่มแต้ม</button>
+              <button type="submit" (click)="subpoint()" class="btn btn-primary">ลดแต้ม</button>
             </div>
           </div>
-          <button type="submit" (click)="submitpoint()" class="btn btn-primary">Submit</button>
-        </div>
       </div>
     </div>
   </div>

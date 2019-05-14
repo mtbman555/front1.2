@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 
+import { MemberService } from "../services/member.service"
+import { async } from 'q';
+
 @Component({
   selector: 'app-sp',
   templateUrl: './sp.component.html',
@@ -12,22 +15,15 @@ export class SpComponent implements OnInit {
     search: ""
   }
   modalmem:any = {
-    ID: "", name:"", sname:"", nname:"", mail:""
+    id: "", name:"", lname:"", nname:"", mail:"", point: 0
   }
   modalpoint:any = {
-    ID: "", add: 0, sub: 0
+    id: "", point: null
   }
-  constructor() { }
+  constructor(private memberService: MemberService,) { }
 
-  ngOnInit() {
-    this.mem = [
-      {
-        id: "DD0001",name: "ปลาหยุด", lname: "จานโอชา", nname: "ตู้", mail: "prayuthza007@gmail.com", point: "888"
-      },
-      {
-        id: "DD0001",name: "ปลาหยุด", lname: "จานโอชา", nname: "ตู้", mail: "prayuthza007@gmail.com", point: "888"
-      },
-    ]
+  async ngOnInit() {
+    this.mem = await this.memberService.getAllMember().toPromise()
   }
   deletemem(data){
     Swal.fire({
@@ -38,8 +34,9 @@ export class SpComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: 'ยกเลิก',
       confirmButtonText: 'ยืนยัน'
-    }).then((result) => {
+    }).then(async(result) => {
       if (result.value) {
+        let deleteMember = await this.memberService.deleteMember(data._id)
         Swal.fire(
           'ลบแล้ว',
           'การลบเสร็จสมบูรณ์',
@@ -51,10 +48,25 @@ export class SpComponent implements OnInit {
   submitsearch(){
     console.log(this.modal1)
   }
-  submitmem(){
+  async submitmem() {
     console.log(this.modalmem)
+    await this.memberService.insertMember(this.modalmem)
+    this.mem = await this.memberService.getAllMember().toPromise()
+    location.reload()
   }
-  submitpoint(){
-    console.log(this.modalpoint)
+  // async addpoint(id,point){
+  //   let tmp = await this.memberService.getPoint(id).toPromise()
+  //   console.log(tmp)
+  //   let updatePoint = await this.memberService.updatePoint(id,point+tmp)
+  //   location.reload()
+  // }
+  async addpoint(){
+    
+    await this.memberService.upPoint(this.modalpoint)
+    location.reload()
+  }
+  async subpoint(){
+    await this.memberService.downPoint(this.modalpoint)
+    location.reload()
   }
 }

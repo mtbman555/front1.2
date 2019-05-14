@@ -1,3 +1,4 @@
+
 <div class="row">
   <div class="col-md">
     <div class="table-responsive-sm">
@@ -7,7 +8,7 @@
             <th scope="col">โต๊ะที่</th>
             <th scope="col">ชื่อลูกค้า</th>
             <th scope="col">จำนวนลูกค้า</th>
-            <th scope="col">เวลาที่เริ่ม</th>
+            <th scope="col">เวลา</th>
             <th scope="col"> </th>
           </tr>
         </thead>
@@ -16,9 +17,9 @@
             <th scope="row">{{data.table}}</th>
             <td>{{data.name}}</td>
             <td>{{data.no}} คน</td>
-            <td>15:50น.</td> 
+            <td>{{data.time}}</td>
             <td>
-              <button type="button" class="btn btn-secondary">เช็คบิล</button>
+              <button type="button" (click)=lookcheck(data.table) class="btn btn-secondary">เช็คบิล</button>
               <button type="button" (click)=deletecus(data) class="btn btn-danger">ลบ</button>
             </td>
           </tr>
@@ -62,19 +63,20 @@
                     </div>
                     <div class="form-group col-md-6">
                       <label for="inputAmount">จำนวนลูกค้า</label>
-                      <input type="text" [(ngModel)]="modal1.count" name="count" class="form-control" id="inputAmount"
+                      <input type="text" [(ngModel)]="modal1.no" name="no" class="form-control" id="inputAmount"
                         placeholder="กรุณาใส่จำนวนลูกค้า">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputTime">เวลาที่เริ่ม</label>
-                    <input type="text" class="form-control" id="inputTime" placeholder="เวลา">
+                    <label for="inputTime">เวลา</label>
+                    <input type="text" [(ngModel)]="modal1.time" name="time" class="form-control" id="inputTime"
+                      placeholder="เวลา">
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                <button type="button" (click)="submit()" class="btn btn-primary">บันทึก</button>
+                <button type="button" (click)="submit()" class="btn btn-primary" data-dismiss="modal">บันทึก</button>
               </div>
             </div>
           </div>
@@ -100,25 +102,29 @@
                   <form>
                     <div class="form-group">
                       <label for="table">เลือกโต๊ะ</label>
-                      <input type="text" class="form-control" id="table" placeholder="โต๊ะที่">
+                      <select class="form-control" [(ngModel)]="modeltable.table" name="table" class="form-control" id="table">
+                        <option *ngFor="let data of list; let i = index" [value]="data.table">
+                          {{data.table}}
+                        </option>
+                      </select>
                     </div>
                   </form>
                   <table class="table table-hover">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">เมนู</th>
-                          <th scope="col">ราคา</th>
-                          <th scope="col"> </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                          <tr *ngFor="let data of menu; let i = index">
-                              <th scope="row">{{data.name}}</th>
-                              <td>{{data.cost}} บาท</td>
-                              <td><button type="button" class="btn btn-success">เพิ่ม</button></td>
-                            </tr>
-                      </tbody>
-                    </table>
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">เมนู</th>
+                        <th scope="col">ราคา</th>
+                        <th scope="col"> </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of menu; let i = index">
+                        <th scope="row">{{data.name}}</th>
+                        <td>{{data.cost}} บาท</td>
+                        <td><button type="button" (click)="submitfood(data)" class="btn btn-success">เพิ่ม</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
               <div class="modal-footer">
@@ -144,42 +150,45 @@
                 </button>
               </div>
               <div class="modal-body">
-                  <div class="form-row">
-                      <div class="form-group col-md-6">
-                        <label for="inputNo">ชื่อเมนูอาหาร</label>
-                        <input type="text" [(ngModel)]="modalmenu.menuname" name="table" class="form-control" id="inputNo"
-                          placeholder="กรุณาใส่ชื่อเมนูอาหาร">
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label for="inputAmount">ราคา</label>
-                        <input type="text" [(ngModel)]="modalmenu.menucost" name="count" class="form-control" id="inputAmount"
-                          placeholder="กรุณาใส่ราคาอาหาร">
-                      </div>
-                    </div>
-                    <table class="table table-hover">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">เมนู</th>
-                          <th scope="col">ราคา</th>
-                          <th scope="col"> </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                          <tr *ngFor="let data of menu; let i = index">
-                              <th scope="row">{{data.name}}</th>
-                              <td>{{data.cost}} บาท</td>
-                              <td><button type="button" (click)=deletemenu(data) class="btn btn-danger">ลบ</button></td>
-                            </tr>
-                      </tbody>
-                    </table>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputNo">ชื่อเมนูอาหาร</label>
+                    <input type="text" [(ngModel)]="modalmenu.name" name="name" class="form-control" id="inputNo"
+                      placeholder="กรุณาใส่ชื่อเมนูอาหาร">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="inputAmount">ราคา</label>
+                    <input type="text" [(ngModel)]="modalmenu.cost" name="cost" class="form-control" id="inputAmount"
+                      placeholder="กรุณาใส่ราคาอาหาร">
+                  </div>
+                </div>
+                <table class="table table-hover">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">เมนู</th>
+                      <th scope="col">ราคา</th>
+                      <th scope="col"> </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of menu; let i = index">
+                      <th scope="row">{{data.name}}</th>
+                      <td>{{data.cost}} บาท</td>
+                      <td><button type="button" (click)=deletemenu(data) class="btn btn-danger">ลบ</button></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                <button type="button" (click)="submitmenu()" class="btn btn-primary">บันทึก</button>
+                <button type="button" (click)="submitmenu()" data-dismiss="modal" class="btn btn-primary">บันทึก</button>
               </div>
             </div>
           </div>
         </div>
+        <button type="button" (click)=lookpro() class="btn btn-primary" data-toggle="modal">
+          ขายสินค้า
+        </button>
       </div>
     </div>
   </div>
@@ -188,24 +197,26 @@
 <div class="row">
   <div class="col-md">
     <div class="row">
-        <div class="container">
-            <table class="table table-hover">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">ชื่อสินค้า</th>
-                    <th scope="col">ราคา</th>
-                    <th scope="col"> </th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let data of product; let i = index">
-                        <th scope="row">{{data.name}}</th>
-                        <td>{{data.cost}} บาท</td>
-                        <td><button type="button" class="btn btn-success">เพิ่ม</button></td>
-                      </tr>
-                </tbody>
-              </table>
-        </div>
+      <div class="container">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">ชื่อสินค้า</th>
+              <th scope="col">ราคา</th>
+              <th scope="col">จำนวน</th>
+              <th scope="col"> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of product; let i = index">
+              <th scope="row">{{data.name}}</th>
+              <td>{{data.price}} บาท</td>
+              <td>{{data.amount}} </td>
+              <td><button type="button" (click)="submitpro(data)" class="btn btn-success">เพิ่ม</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <div class="col-4">
@@ -213,7 +224,7 @@
       <thead class="thead-dark">
         <tr>
           <th scope="col">สินค้า</th>
-          <th scope="col">จำนวน</th>
+          <th scope="col">โต๊ะ</th>
           <th scope="col">ราคา</th>
           <th scope="col"> </th>
         </tr>
@@ -221,17 +232,112 @@
       <tbody>
         <tr *ngFor="let data of list2; let i = index">
           <th scope="row">{{data.name}}</th>
-          <td>{{data.amount}}</td>
+          <td>{{data.table}}</td>
           <td>{{data.cost}} บาท</td>
-          <td><button type="button" class="btn btn-danger" (click)=deletelist(item)>ลบ</button></td>
+          <td><button type="button" class="btn btn-danger" (click)=deletelist(data)>ลบ</button></td>
         </tr>
       </tbody>
     </table>
     <div class="down">
-      <h1>รวมทั้งสิ้น {{cost}}</h1>
+      <h1>รวมทั้งสิ้น {{cost}} บาท</h1>
     </div>
-    <div class="row fixed-bottom">
-      <button type="button" class="btn btn-primary btn-lg btn-block" (click)=confirmpay()>ชำระเงิน</button>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-md">
+    
+      <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter">ชำระเงิน</button>
+    
+    <!-- Modalจ่ายตัง -->
+    <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">ชำระเงิน</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="row">
+                <form>
+                  <h3>ชั่วโมงบอร์ดเกม</h3>
+                  <div class="form-row">
+                    <div class="col">
+                      <label for="tablenum">โต๊ะที่</label>
+                      <select class="form-control" [(ngModel)]="modallast.table" name="table" class="form-control" id="tablenum"
+                        placeholder="โต๊ะที่">
+                        <option *ngFor="let data of list; let i = index" [value]="data.table">
+                          {{data.table}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <label for="cusnum">จำนวนลูกค้า</label>
+                      <input type="text" [(ngModel)]="modallast.amount" name="amount" class="form-control" id="cusnum"
+                        placeholder="จำนวนลูกค้า">
+                    </div>
+                    <div class="col">
+                      <label for="costnum">ราคา/คน</label>
+                      <input type="text" [(ngModel)]="modallast.cost" name="cost" class="form-control" id="costnum"
+                        placeholder="ราคา">
+                    </div>
+                    <div class="col align-self-end">
+                      <button type="button" class="btn btn-success" (click)="submitlast()">เพิ่ม</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <br>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <table class="table table-hover">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">สินค้า</th>
+                        <th scope="col">โต๊ะ</th>
+                        <th scope="col">ราคา</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of list2; let i = index">
+                        <th scope="row">{{data.name}}</th>
+                        <td>{{data.table}}</td>
+                        <td>{{data.cost}} บาท</td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="down">
+                    <h1>รวมทั้งสิ้น {{cost}} บาท</h1>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="money">รับเงิน</label>
+                      <input class="form-control" type="text" placeholder="รับเงิน" [(ngModel)]=modalacc.money name="money" id="money">
+                      <label for="exampleFormControlSelect1">เลือกบัญชี</label>
+                      <select class="form-control" [(ngModel)]=modalacc.month  name="month" >
+                          <option *ngFor="let data of acc; let i = index" [value]="data._id">
+                              {{monthList[data.month]}}
+                            </option>
+                      </select>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="pay()">ยืนยันการชำระเงิน</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
