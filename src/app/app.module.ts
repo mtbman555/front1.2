@@ -28,7 +28,7 @@ import { AccService } from "./services/acc.service";
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/bg', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'bg', component: BgComponent },
   { path: 'sm', component: SmComponent },

@@ -12,10 +12,5 @@ export class NavComponent implements OnInit {
   ngOnInit() {
     
   }
-  turnon(){
-    this.con =" "
-  }
-  turnoff(){
-    this.con ="disabled"
-  }
+  
 }

@@ -33,7 +33,7 @@
       <div class="btn-group-vertical btn-group-lg" role="group" aria-label="...">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
-          เพิ่มลูกค้าใหม่
+          เพิ่มบิลรายการ
         </button>
         <!-- Modal -->
         <div class="modal fade bd-example-modal-lg" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -41,7 +41,7 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">เพิ่มลูกค้าใหม่</h5>
+                <h5 class="modal-title" id="exampleModalLabel">เพิ่มบิลรายการ</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -103,6 +103,7 @@
                     <div class="form-group">
                       <label for="table">เลือกโต๊ะ</label>
                       <select class="form-control" [(ngModel)]="modeltable.table" name="table" class="form-control" id="table">
+                          <option [value]="null">----</option>
                         <option *ngFor="let data of list; let i = index" [value]="data.table">
                           {{data.table}}
                         </option>
@@ -323,6 +324,7 @@
                       <input class="form-control" type="text" placeholder="รับเงิน" [(ngModel)]=modalacc.money name="money" id="money">
                       <label for="exampleFormControlSelect1">เลือกบัญชี</label>
                       <select class="form-control" [(ngModel)]=modalacc.month  name="month" >
+                          <option [value]="null">----</option>
                           <option *ngFor="let data of acc; let i = index" [value]="data._id">
                               {{monthList[data.month]}}
                             </option>

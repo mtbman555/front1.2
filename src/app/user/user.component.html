@@ -7,7 +7,7 @@
             <thead class="thead-dark">
               <tr>
                 <th scope="col">ชื่อผู้ใช้</th>
-                <th scope="col">รหัสผ่าน</th>
+                
                 <th scope="col">ชื่อ</th>
                 <th scope="col">สถานะ</th>
                 <th scope="col"> </th>
@@ -16,7 +16,7 @@
             <tbody>
               <tr *ngFor="let data of user; let i = index">
                 <th scope="row">{{data.id}}</th>
-                <td>{{data.pw}}</td>
+                
                 <td>{{data.name}} </td>
                 <td>{{data.status}} </td>
                 <td><button type="button" (click)=deleteuser(data) class="btn btn-danger">ลบ</button></td>

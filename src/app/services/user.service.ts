@@ -14,15 +14,13 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    getUser(id) {
-        return this.http.get(url + 'user/' + id);
-    }
+    
     getAllUser() {
         return this.http.get(url + 'user/all');
     }
     login(value) {
         console.log(value)
-        return this.http.post(url + 'user/login' , value).subscribe();
+        return this.http.post(url + 'user/log' , value).subscribe();
     }
     insertUser(value) {    
         console.log(value)

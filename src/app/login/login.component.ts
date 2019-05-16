@@ -11,6 +11,8 @@ import { from } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  
+  tmp: any 
   modallogin: any = {
     id: "", pw: ""
   }
@@ -23,7 +25,9 @@ export class LoginComponent implements OnInit {
   }
 
   async submitlogin() {
-    await this.userService.login(this.modallogin)
+    let data = await this.userService.login(this.modallogin);
+    console.log(data)
+    
   }
   
 }
