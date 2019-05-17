@@ -7,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
   con: any = "disabled"
-  constructor() { }
 
-  ngOnInit() {
-    
+  user: any = [];
+
+  constructor(  ) { }
+
+  async ngOnInit() {
+    let user = JSON.parse(localStorage.getItem('user'))
+    console.log(user.status)
   }
-  
+
+
 }

@@ -10,21 +10,20 @@ import { Event, NavigationStart, NavigationEnd, NavigationError } from '@angular
   styleUrls: ['./app.component.css']
 })
 export class AppComponent{
-  con: any = true
+  currentPath = ''
   title = 'Pro';
   constructor(
     private router: Router
   ){
     router.events.subscribe((event: Event) => {
-      // console.log(event);
       if (event instanceof NavigationEnd ) {
-        console.log(event.url);
-        if (event.url == "/login") {
-          return this.con = false
-        }
+        this.currentPath = event.url
       }
     });
   }
   
+  ngOnChangaes() {
+
+  }
   
 }

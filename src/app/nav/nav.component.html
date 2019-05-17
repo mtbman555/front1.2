@@ -19,7 +19,7 @@
           <a class="nav-link " routerLink="/pp" href="#">บัญชี</a>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="user.status != 'admin'">
           <a class="nav-link " routerLink="/user" href="#">จัดการผู้ใช้</a>
       </li>
     </ul>

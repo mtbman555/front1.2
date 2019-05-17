@@ -19,8 +19,7 @@ export class UserService {
         return this.http.get(url + 'user/all');
     }
     login(value) {
-        console.log(value)
-        return this.http.post(url + 'user/log' , value).subscribe();
+        return this.http.post(url + 'user/login' , value)
     }
     insertUser(value) {    
         console.log(value)
